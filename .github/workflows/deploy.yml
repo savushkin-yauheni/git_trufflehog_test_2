@@ -1,0 +1,26 @@
+# This workflow for our node.js 18 app does the following:
+# - run tests
+# - build the app
+# - login to Azure with AZURE_CREDENTIALS github secret
+# - run Azure CLI command to deploy
+
+name: Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Dump pipedrean env var
+        run: echo "pipedream api key = ${{ vars.PIPEDREAM_API }}"
+
+
+      - name: Deploy to Azure
+        run: |
+          # Set cosmos variables in web app
+          az webapp config appsettings set --name nodejs-todo-sinedied --resource-group rg-copilot-nodejs-todo --settings COSMOS_ENDPOINT=$cosmos_endpoint COSMOS_KEY=$cosmos_key
